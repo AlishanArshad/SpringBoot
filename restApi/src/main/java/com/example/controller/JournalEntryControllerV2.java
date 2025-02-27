@@ -3,9 +3,12 @@ package com.example.controller;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -43,6 +46,16 @@ public class JournalEntryControllerV2 {
     public JournalEntry getJournalEntryById(@PathVariable ObjectId myId) {
         return journalEntryService.findById(myId).orElse(null);
     }
+
+    // @GetMapping("id/{myId}")
+    // public JournalEntry getJournalEntryById(@PathVariable ObjectId myId) {
+    //     Optional<JournalEntry> journalEntry = journalEntryService.findById(myId);
+    //     if(journalEntry.isPresent()){
+    //         return new ResponseEntity<>(journalEntry.get(), HttpStatus.OK);
+    //     }
+    //     return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    // }
+
 
     @DeleteMapping("id/{myId}")
     public boolean deleJournalEntryById(@PathVariable ObjectId myId){
