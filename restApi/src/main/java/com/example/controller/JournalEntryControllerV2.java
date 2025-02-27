@@ -42,20 +42,15 @@ public class JournalEntryControllerV2 {
         return myEntry;
     }
 
+
     @GetMapping("id/{myId}")
-    public JournalEntry getJournalEntryById(@PathVariable ObjectId myId) {
-        return journalEntryService.findById(myId).orElse(null);
+    public ResponseEntity<JournalEntry> getJournalEntryById(@PathVariable ObjectId myId) {
+        Optional<JournalEntry> journalEntry = journalEntryService.findById(myId);
+        if (journalEntry.isPresent()) {
+            return new ResponseEntity<>(journalEntry.get(), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
-
-    // @GetMapping("id/{myId}")
-    // public JournalEntry getJournalEntryById(@PathVariable ObjectId myId) {
-    //     Optional<JournalEntry> journalEntry = journalEntryService.findById(myId);
-    //     if(journalEntry.isPresent()){
-    //         return new ResponseEntity<>(journalEntry.get(), HttpStatus.OK);
-    //     }
-    //     return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    // }
-
 
     @DeleteMapping("id/{myId}")
     public boolean deleJournalEntryById(@PathVariable ObjectId myId){
